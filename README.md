@@ -1,5 +1,4 @@
-# final_project_flutter1
-
+# Github training project
 A new Flutter project.
 
 ## Getting Started
