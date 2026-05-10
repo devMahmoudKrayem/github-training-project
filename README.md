@@ -18,6 +18,16 @@ Fresh Fruits is built as a final Flutter project with a clean Material UI, custo
 - Custom image assets and Poppins typography
 - Bottom navigation between the main app sections
 
+## Screenshots
+
+| Splash | Onboarding | Sign In |
+| --- | --- | --- |
+| <img src="screenshots/splash.png" alt="Fresh Fruits splash screen" width="220"> | <img src="screenshots/onboarding.png" alt="Fresh Fruits onboarding screen" width="220"> | <img src="screenshots/sign-in.png" alt="Fresh Fruits sign in screen" width="220"> |
+
+| Sign Up | Home | Categories |
+| --- | --- | --- |
+| <img src="screenshots/sign-up.png" alt="Fresh Fruits sign up screen" width="220"> | <img src="screenshots/home.png" alt="Fresh Fruits home screen" width="220"> | <img src="screenshots/categories.png" alt="Fresh Fruits categories screen" width="220"> |
+
 ## Tech Stack
 
 - Flutter
@@ -51,6 +61,7 @@ lib/
     signUpField.dart
 
 images/                     # App images and product/category assets
+screenshots/                # App screenshots used in the README
 fonts/                      # Poppins font files
 test/                       # Flutter widget tests
 ```
