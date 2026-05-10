@@ -15,7 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool hiddenPassword = true;
 
-
   @override
   void dispose() {
     email.dispose();
@@ -25,21 +24,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> login() async {
     if (email.text.trim().isEmpty || password.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please enter email and password')),);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter email and password')),
+      );
       return;
     }
-
 
     final success = await PrefsUser.login(
       email: email.text.trim(),
       password: password.text,
     );
 
-
     if (success) {
       Navigator.pushReplacementNamed(context, '/homeScreen');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error in email or password')),);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error in email or password')));
     }
   }
 
@@ -55,10 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
             right: 0,
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.55,
-              child: Image.asset(
-                "images/login.png",
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset("images/login.png", fit: BoxFit.cover),
             ),
           ),
           Positioned(
@@ -68,12 +66,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: GestureDetector(
                 onTap: () => Navigator.pop(context),
                 child: Container(
-                  padding:EdgeInsets.all(8),
-                  child:Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    size: 28,
-                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Icon(Icons.arrow_back, color: Colors.white, size: 28),
                 ),
               ),
             ),
@@ -82,17 +76,15 @@ class _LoginScreenState extends State<LoginScreen> {
             alignment: Alignment.bottomCenter,
             child: Container(
               height: 470,
-              decoration:BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(35),
-                ),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 10,
                     offset: Offset(0, -5),
-                  )
+                  ),
                 ],
               ),
               child: Padding(
@@ -116,25 +108,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           GestureDetector(
                             onTap: () => Navigator.pop(context),
                             child: Container(
-                              padding:EdgeInsets.all(4),
-                              decoration:BoxDecoration(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
                                 color: Colors.black,
                                 shape: BoxShape.circle,
                               ),
-                              child:Icon(
+                              child: Icon(
                                 Icons.close,
                                 color: Colors.white,
                                 size: 20,
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(height: 30),
-                      LoginField(
-                        controller: email,
-                        hint: "Email",
-                      ),
+                      LoginField(controller: email, hint: "Email"),
                       SizedBox(height: 15),
                       LoginField(
                         controller: password,
@@ -157,14 +146,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         height: 60,
                         child: ElevatedButton(
-                          onPressed:login,
+                          onPressed: login,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:Color(0xffFFC554),
+                            backgroundColor: Color(0xffFFC554),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35),
                             ),
                           ),
-                          child:Text(
+                          child: Text(
                             "SIGN IN",
                             style: TextStyle(
                               fontFamily: 'Poppins',
