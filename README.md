@@ -153,6 +153,10 @@ flutter pub get
 - Passwords are stored locally for demonstration purposes. For production apps, use secure authentication and encrypted storage.
 - Some UI labels and file names contain spelling inconsistencies inherited from the current codebase, but they do not prevent the app from running.
 
+## Author
+
+Mahmoud Nasser Abu Kraiem
+
 ## License
 
 This project is intended for educational and portfolio use. Add a license file before publishing or distributing it publicly.
