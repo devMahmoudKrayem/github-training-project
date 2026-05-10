@@ -12,61 +12,64 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-
 class _HomeScreenState extends State<HomeScreen> {
   String fullName = "User";
+
+  static const primaryColor = Color(0xffF4B844);
+
   @override
   void initState() {
     super.initState();
     getUser();
   }
+
   Future<void> getUser() async {
     final user = await PrefsUser.getUser();
 
     final firstName = user['firstName'] ?? '';
     final lastName = user['lastName'] ?? '';
 
-
     setState(() {
       fullName = "$firstName $lastName".trim();
-      if (fullName.isEmpty) {
-        fullName = "User";
-      }
+      if (fullName.isEmpty) fullName = "User";
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xffFAFAFA),
+
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xffF4B844),
+        selectedItemColor: primaryColor,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        currentIndex: 0,
         onTap: (index) {
           if (index == 1) {
             Navigator.pushNamed(context, '/categoriesScreen');
-          }else if(index==4){
+          } else if (index == 4) {
             Navigator.pushNamed(context, '/profileScreen');
           }
         },
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: ""),
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+          const BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: ""),
           BottomNavigationBarItem(
             icon: Stack(
               clipBehavior: Clip.none,
               children: [
-                Icon(Icons.shopping_cart),
+                const Icon(Icons.shopping_cart),
                 Positioned(
                   right: -2,
                   top: -2,
                   child: Container(
-                    width: 10,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: Colors.yellow,
+                    width: 9,
+                    height: 9,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -75,8 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             label: "",
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ""),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ""),
+          const BottomNavigationBarItem(
             icon: CircleAvatar(
               radius: 12,
               backgroundImage: AssetImage("images/avataruser21.png"),
@@ -85,55 +88,84 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Good Morning",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                    Text(
-                      fullName,
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                Icon(Icons.notifications_none_outlined, size: 28),
-              ],
-            ),
 
-            SizedBox(height: 25),
-            SizedBox(
-              height: 160,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+            const SizedBox(height: 20),
+
+            // 🌟 HEADER MODERN CARD
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 12,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  HorezantelCard("images/home11.png","Recommended\nRecipe Today",),
-                  HorezantelCard("images/home22.png", "Fresh Food\nDelivery"),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Good Morning 👋",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        fullName,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Icon(Icons.notifications_none_outlined, size: 28),
                 ],
               ),
             ),
-            SizedBox(height: 25),
+
+            const SizedBox(height: 25),
+
+            // 🎯 HERO CARDS
+            SizedBox(
+              height: 170,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  HorezantelCard(
+                    "images/home11.png",
+                    "Recommended\nRecipe Today",
+                  ),
+                  HorezantelCard(
+                    "images/home22.png",
+                    "Fresh Food\nDelivery",
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
             Sections("Categories", () {
               Navigator.pushNamed(context, '/categoriesScreen');
             }),
+
+            const SizedBox(height: 10),
+
             SizedBox(
               height: 90,
               child: ListView(
@@ -148,37 +180,52 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
 
             Sections("Trending Deals", () {}),
 
+            const SizedBox(height: 10),
+
+            // 🛒 PRODUCT GRID MODERNIZED
             GridView.count(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               crossAxisSpacing: 15,
               mainAxisSpacing: 15,
-              childAspectRatio: 0.8,
+              childAspectRatio: 0.78,
               children: [
                 ProudctCard("images/home4.png", "Avocado", "\$6.7", Colors.red),
-                ProudctCard("images/home3.png", "Brocoli", "\$8.7", Colors.white,),
-                ProudctCard("images/home6.png", "Tomatoes", "\$4.9", Colors.white,),
-                ProudctCard("images/home5.png", "Grapes", "\$7.2", Colors.white,),
+                ProudctCard("images/home3.png", "Broccoli", "\$8.7", Colors.white),
+                ProudctCard("images/home6.png", "Tomatoes", "\$4.9", Colors.white),
+                ProudctCard("images/home5.png", "Grapes", "\$7.2", Colors.white),
               ],
             ),
-            SizedBox(height: 25),
+
+            const SizedBox(height: 25),
+
+            // 🔘 MORE BUTTON MODERN
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                minimumSize: Size(double.infinity, 55),
+                backgroundColor: primaryColor,
+                minimumSize: const Size(double.infinity, 55),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 0,
               ),
-              child: Text(
+              child: const Text(
                 "More",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            SizedBox(height: 30),
+
+            const SizedBox(height: 30),
           ],
         ),
       ),
