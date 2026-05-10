@@ -1,27 +1,29 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsUser {
-  static  String firstNameKey = 'firstname';
-  static  String lastNameKey = 'lastName';
-  static  String emailKey = 'email';
-  static  String passwordKey = 'password';
-  static  String isLogInKey = 'isLoggIn';
+  static const String firstNameKey = 'firstname';
+  static const String lastNameKey = 'lastName';
+  static const String emailKey = 'email';
+  static const String passwordKey = 'password';
+  static const String isLoggedInKey = 'isLoggedIn';
 
+  // SIGN UP
   static Future<void> signUp({
     required String firstName,
     required String lastName,
     required String email,
-    required String password,}) async {
+    required String password,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
 
-     prefs.setString(firstNameKey, firstName);
-     prefs.setString(lastNameKey, lastName);
-     prefs.setString(emailKey, email.trim());
-     prefs.setString(passwordKey, password);
-     prefs.setBool(isLogInKey, false);
+    await prefs.setString(firstNameKey, firstName);
+    await prefs.setString(lastNameKey, lastName);
+    await prefs.setString(emailKey, email.trim());
+    await prefs.setString(passwordKey, password);
+    await prefs.setBool(isLoggedInKey, false);
   }
 
-
+  // LOGIN
   static Future<bool> login({
     required String email,
     required String password,
@@ -31,26 +33,32 @@ class PrefsUser {
     final savedEmail = prefs.getString(emailKey);
     final savedPassword = prefs.getString(passwordKey);
 
-    if (savedEmail == email.trim() && savedPassword == password) {
-       prefs.setBool(isLogInKey, true);
-      return true;
+    final isValid =
+        savedEmail == email.trim() && savedPassword == password;
+
+    if (isValid) {
+      await prefs.setBool(isLoggedInKey, true);
     }
 
-    return false;
+    return isValid;
   }
 
+  // LOGOUT
   static Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-     prefs.setBool(isLogInKey, false);
+    await prefs.setBool(isLoggedInKey, false);
   }
 
+  // CHECK LOGIN STATUS
   static Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(isLogInKey) ?? false;
+    return prefs.getBool(isLoggedInKey) ?? false;
   }
 
+  // GET USER DATA
   static Future<Map<String, String>> getUser() async {
     final prefs = await SharedPreferences.getInstance();
+
     return {
       'firstName': prefs.getString(firstNameKey) ?? '',
       'lastName': prefs.getString(lastNameKey) ?? '',
@@ -59,6 +67,7 @@ class PrefsUser {
     };
   }
 
+  // UPDATE USER
   static Future<void> updateUser({
     required String firstName,
     required String lastName,
@@ -67,19 +76,20 @@ class PrefsUser {
   }) async {
     final prefs = await SharedPreferences.getInstance();
 
-     prefs.setString(firstNameKey, firstName);
-     prefs.setString(lastNameKey, lastName);
-     prefs.setString(emailKey, email.trim());
-     prefs.setString(passwordKey, password);
+    await prefs.setString(firstNameKey, firstName);
+    await prefs.setString(lastNameKey, lastName);
+    await prefs.setString(emailKey, email.trim());
+    await prefs.setString(passwordKey, password);
   }
 
+  // DELETE ACCOUNT
   static Future<void> deleteAccount() async {
     final prefs = await SharedPreferences.getInstance();
 
-     prefs.remove(firstNameKey);
-     prefs.remove(lastNameKey);
-     prefs.remove(emailKey);
-     prefs.remove(passwordKey);
-     prefs.remove(isLogInKey);
+    await prefs.remove(firstNameKey);
+    await prefs.remove(lastNameKey);
+    await prefs.remove(emailKey);
+    await prefs.remove(passwordKey);
+    await prefs.remove(isLoggedInKey);
   }
 }
